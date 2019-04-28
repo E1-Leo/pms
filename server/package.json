@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "koa-router": "^7.4.0",
     "mysql": "^2.17.1"
   },
   "devDependencies": {},
