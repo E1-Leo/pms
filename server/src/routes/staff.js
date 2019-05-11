@@ -7,7 +7,8 @@ const checkAuth = require('../middleswares/checkAuth');
 const staffController = require('../controllers/staff');
 
 const routers = router
-    .get('/staff/', checkAuth, staffController. )
-    .post('/staff/', checkAuth, staffController. )
+    .get('/staff/list', checkAuth, staffController.getStaffList )
+    .post('/staff/create', checkAuth, staffController.createStaff )
+    .post('/staff/delete', checkAuth, staffController.deleteStaff )
 
 module.exports = routers

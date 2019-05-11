@@ -8,6 +8,7 @@ const diviController = require('../controllers/divi');
 
 const routers = router
     .get('/divi/list', checkAuth, diviController.getDiviList )
-    .post('/divi/', checkAuth, diviController. )
+    .post('/divi/create', checkAuth, diviController.createDivi )
+    .post('/divi/delete', checkAuth, diviController.deleteDivi )
 
 module.exports = routers

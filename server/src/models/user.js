@@ -3,13 +3,13 @@ const dbUtils = require('../utils/db');
 class UserModal {
 
   /**
-   * 根据用户名、密码查找用户
-   * @param {object} options  用户名、密码
-   * @return {object|null}    返回用户信息或nul
+   * 根据用户名查找用户
+   * @param  {object} username  用户名
+   * @return {object|null}      返回用户信息或者null
   */
-  static async getUserByUserNameAndPassword(options) {
-    let _sql = "SELECT * FROM ?? WHERE username = ? and password = ? limit 1 "
-    let result = await dbUtils.query(_sql, ['user', options.username, options.password])
+  static async getUserByUserName(username) {
+    let _sql = "SELECT * FROM ?? WHERE username = ? limit 1 "
+    let result = await dbUtils.query(_sql, ['user', username])
     if (Array.isArray(result) && result.length > 0) {
       result = result[0];
     } else {
@@ -19,13 +19,13 @@ class UserModal {
   }
 
   /**
-   * 根据用户名查找用户
-   * @param  {object} username  用户名
-   * @return {object|null}      返回用户信息或者null
+   * 根据密码查找用户
+   * @param {object} password   密码
+   * @return {object|null}      返回用户信息或nul
   */
-  static async getUserByUserName(username) {
-    let _sql = "SELECT * FROM ?? WHERE username = ? limit 1 "
-    let result = await dbUtils.query(_sql, ['user', username])
+  static async getUserByPassword(options) {
+    let _sql = "SELECT * FROM ?? WHERE password = ? limit 1 "
+    let result = await dbUtils.query(_sql, ['user', password])
     if (Array.isArray(result) && result.length > 0) {
       result = result[0];
     } else {
@@ -66,9 +66,6 @@ class UserModal {
       result = null;
       return result;
     }
-    let currentTime = new Date().getTime();
-    options.createTime = currentTime;
-    options.updateTime = currentTime;
     let insertResult = await dbUtils.insertData('user', options);
     if (insertResult && insertResult.insertId) {
       let res = await dbUtils.findDataById('user', insertResult.insertId)

@@ -10,11 +10,11 @@
       <h3>人事管理系统登录</h3>
     </Form-item>
 
-    <Form-item prop="loginname">
+    <Form-item prop="username">
       <i-input
         size="large"
         type="text"
-        v-model="formLogin.loginname"
+        v-model="formLogin.username"
         placeholder="用户名"
       >
         <Icon type="ios-person-outline" slot="prepend"></Icon>
@@ -52,17 +52,18 @@
   </i-form>
 </template>
 <script>
+import axios from 'axios';
 export default {
   name: 'Login',
   data() {
     return {
       formLogin: {
-        loginname: '',
+        username: '',
         password: '',
         remember: []
       },
       formLoginRules: {
-        loginname: [
+        username: [
           { required: true, message: '请填写用户名', trigger: 'blur' }
         ],
         password: [
@@ -82,25 +83,30 @@ export default {
       this.$refs[name].validate(valid => {
         sessionStorage.setItem(
           'user',
-          JSON.stringify(this.formLogin.loginname)
+          JSON.stringify(this.formLogin.username)
         );
         if (valid) {
-          this.$Message.success('提交成功!');
-          this.$router.push({ path: '/UserQ' });
+          axios.post('/api/user/signIn', { username: this.formLogin.username, password: this.formLogin.password })
+            .then((res) => {
+              if( res.success ) {
+                this.$Message.success('提交成功!');
+                this.$router.push({ path: '/UserQ' });
+              }
+            });
         } else {
           this.$Message.error('表单验证失败!');
         }
         if (this.formLogin.remember[0] == '记住密码') {
           sessionStorage.setItem(
-            'loginname',
-            JSON.stringify(this.formLogin.loginname)
+            'username',
+            JSON.stringify(this.formLogin.username)
           );
           sessionStorage.setItem(
             'password',
             JSON.stringify(this.formLogin.password)
           );
         } else {
-          sessionStorage.removeItem('loginname');
+          sessionStorage.removeItem('username');
           sessionStorage.removeItem('password');
         }
       });
@@ -110,9 +116,9 @@ export default {
     }
   },
   mounted() {
-    if (sessionStorage.getItem('loginname')) {
-      this.formLogin.loginname = JSON.parse(
-        sessionStorage.getItem('loginname')
+    if (sessionStorage.getItem('username')) {
+      this.formLogin.username = JSON.parse(
+        sessionStorage.getItem('username')
       );
     }
     if (sessionStorage.getItem('password')) {

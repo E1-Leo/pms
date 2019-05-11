@@ -33,7 +33,7 @@ class UserController {
         ctx.cookies.set("token", token);
       } else {
         result.message = handle.message.FAIL_USER_NAME_OR_PASSWORD_ERROR;
-        result.code = "FAIL_USER_NAME_OR_PASSWORD_ERROR";
+        result.code = "-1";
       }
     } else {
       result.code = "FAIL_USER_NO_EXIST";
