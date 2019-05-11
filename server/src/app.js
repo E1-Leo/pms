@@ -1,7 +1,6 @@
 const Koa = require("koa");
 const bodyParser = require("koa-bodyparser");
 const routers = require("./routes/index");
-const checkAuth = require("./middleswares/checkAuth");
 const errorHandle = require("./middleswares/errorHandle");
 
 class App {

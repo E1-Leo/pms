@@ -94,8 +94,8 @@
                     <div class="layout-logo-left">
                         <span class="layout-text" style="color: rgba(255, 255, 255, 0.7);"> 人事管理系统</span>
                     </div>
-                    <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
-                        <Submenu  :name="item.name" v-if="!item.leaf">
+                    <template v-for="(item) in $router.options.routes" v-if="!item.hidden">
+                        <Submenu :name="item.name" v-if="!item.leaf">
                             <template slot="title">
                                 <span class="layout-text">{{ item.name }}</span>
                             </template>
@@ -139,21 +139,6 @@
                 </div>
             </i-col>
         </Row>
-        
-        <Modal v-model="modal1" title="修改密码" @on-ok.prevent="comfirmModifyPS"  @on-cancel="cancel" >
-            <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
-                <Form-item label="原密码" prop="oldPassword">
-                    <Input v-model="formValidate.oldPassword" placeholder="请输入原始密码"></Input>
-                </Form-item>
-                <Form-item label="新密码" prop="newPassword">
-                    <Input v-model="formValidate.newPassword" placeholder="请输入新密码"></Input>
-                </Form-item>
-                 <Form-item label="确认新密码" prop="resetPassword">
-                    <Input v-model="formValidate.resetPassword" placeholder="请再次输入新密码"></Input>
-                </Form-item>
-            </Form>
-        </Modal>
-
     </div>
 </template>
 
@@ -163,24 +148,7 @@
         data() {
             return {
                 openNames: [this.$route.matched[0].name],
-                curUserName: sessionStorage.getItem('user').replace(/\"/g, ""),
-                modal1: false,
-                formValidate: {
-                    oldPassword: '',
-                    newPassword: '',
-                    resetPassword:''
-                },
-                ruleValidate: {
-                    oldPassword: [
-                        { required: true, message: '密码不能为空', trigger: 'blur' }
-                    ],
-                    newPassword: [
-                        { required: true, message: '密码不能为空', trigger: 'blur' }
-                    ],
-                    resetPassword: [
-                        { required: true, message: '密码不能为空', trigger: 'blur' }
-                    ],
-                }
+                curUserName: 'name'
             }
         },
         computed: {

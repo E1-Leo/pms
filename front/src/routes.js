@@ -9,7 +9,7 @@ import DiviL from './views/diviM/DiviL.vue';  //部门列表
 import DiviAdd from './views/diviM/DiviAdd.vue';  //添加部门
 import PosiL from './views/posiM/PosiL.vue';  //职位列表
 import PosiAdd from './views/posiM/PosiAdd.vue';  //添加职位
-import StaffL from './views/staffM/StaffL.vue';  //员工列表
+import StaffList from './views/staffM/StaffList.vue';  //员工列表
 import StaffAdd from './views/staffM/StaffAdd.vue';  //添加员工
 import AnnL from './views/annM/AnnL.vue';  //公告列表
 import AnnAdd from './views/annM/AnnAdd.vue';  //添加公告
@@ -61,7 +61,7 @@ export default [
     name: '员工管理',
     component: Home,
     children: [
-      { path: '/staffl', component: StaffL, name: '员工列表' },
+      { path: '/stafflist', component: StaffList, name: '员工列表' },
       { path: '/staffadd', component: StaffAdd, name: '添加员工' }
     ]
   },

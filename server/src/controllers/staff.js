@@ -27,8 +27,10 @@ class StaffController {
             name: formData.name,
             department: formData.department,
             jobname: formData.jobname,
-            jobtime: formData.jobtime,
+            jobtime: formData.jobtime
         });
+        console.log('formData:' + JSON.stringify(formData))
+
         if (staffResult) {
             result = handle.response(true, '', staffResult, 200);
         }

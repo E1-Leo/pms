@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Table border :columns="columns" :data="data2">
+    <Table border :columns="columns" :data="list">
       <template slot-scope="{ row }" slot="name">
         <strong>{{ row.name }}</strong>
       </template>
@@ -12,7 +12,7 @@
           @click="show(index)"
           >View</Button
         >
-        <Button type="error" size="small" @click="remove(index)">Delete</Button>
+        <Button type="error" size="small" @click="remove(row.id)">Delete</Button>
       </template>
     </Table>
     <div class="page">
@@ -27,16 +27,16 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
-  name: 'UserQ',
   data() {
     return {
       total: 9999,
       page: 1,
       columns: [
         {
-          title: '序号',
-          key: 'index',
+          title: '编号',
+          key: 'id',
           align: 'center'
         },
         {
@@ -46,7 +46,7 @@ export default {
         },
         {
           title: '部门',
-          key: 'diviname',
+          key: 'department',
           align: 'center'
         },
         {
@@ -66,51 +66,42 @@ export default {
           align: 'center'
         }
       ],
-      data2: [
-        {
-          index: 1,
-          name: '王焕',
-          diviname: '行政部',
-          jobname: '总经理',
-          jobtime: '2017-01-20',
-        },
-        {
-          index: 2,
-          name: '李黑',
-          diviname: '销售部',
-          jobname: '销售经理',
-          jobtime: '2018-06-15',
-        },
-        {
-          index: 3,
-          name: '程辉',
-          diviname: '财务部',
-          jobname: '财务会计',
-          jobtime: '2018-11-05',
-        },
-        {
-          index: 4,
-          name: '陈燕',
-          diviname: '技术部',
-          jobname: '技术总监',
-          jobtime: '2017-08-09',
-        }
-      ]
+      list: []
     };
   },
+  
+  created() {
+    this.getList();
+  },
   methods: {
+    getList() {
+      axios.get('/api/staff/list')
+        .then(({data}) => {
+          this.list = data.data;
+        })
+    },
     show(index) {
       this.$Modal.info({
         title: '用户信息',
-        content: `序号：${this.data2[index].index}<br>
-                  姓名: ${this.data2[index].name}<br>
-                  部门：${this.data2[index].diviname}<br>
-                  职位：${this.data2[index].jobname}<br>
-                  入职时间：${this.data2[index].jobtime}`
+        content: `序号：${this.list[index].id}<br>
+                  姓名: ${this.list[index].name}<br>
+                  部门：${this.list[index].department}<br>
+                  职位：${this.list[index].jobname}<br>
+                  入职时间：${this.list[index].jobtime}`
       });
     },
-    remove(index) {
-      this.data2.splice(index, 1);
+    remove(id) {
+      axios.post('/api/staff/delete', {id: id})
+        .then(({data}) => {
+          if(data.success) {
+            let index = this.list.findIndex(function(obj) {
+              return obj.id === id
+            })
+            if (index >=0) {
+              this.list.splice(index, 1);
+            }
+          }
+        })
     },
     currentChange (page) {
       this.$router.push({
