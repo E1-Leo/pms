@@ -94,20 +94,23 @@
                     <div class="layout-logo-left">
                         <span class="layout-text" style="color: rgba(255, 255, 255, 0.7);"> 人事管理系统</span>
                     </div>
-                    <template v-for="(item) in $router.options.routes" v-if="!item.hidden">
-                        <Submenu :name="item.name" v-if="!item.leaf">
-                            <template slot="title">
-                                <span class="layout-text">{{ item.name }}</span>
+                    <template v-for="(item, index) in $router.options.routes">
+                        <template v-if="!item.hidden">
+                            <Submenu :key="index" :name="item.name" v-if="!item.leaf">
+                                <template slot="title">
+                                    <span class="layout-text">{{ item.name }}</span>
+                                </template>
+                                <template v-for="(child, index) in item.children">
+                                    <Menu-item :key="index" :name="child.path">{{ child.name }}</Menu-item>
+                                </template>
+                            </Submenu>
+                            <template v-if=" item.leaf && item.children.length > 0 ">
+                                <Menu-item :key="index" :name="item.children[0].path">
+                                    <span class="layout-text" >{{ item.children[0].name }}</span>
+                                </Menu-item>
                             </template>
-                            <template v-for="(child,childIndex) in item.children" v-if="!child.hidden">
-                                <Menu-item :name="child.path">{{ child.name }}</Menu-item>
-                            </template>
-                        </Submenu>
-                        <template v-if=" item.leaf && item.children.length > 0 ">
-                            <Menu-item :name="item.children[0].path">
-                                <span class="layout-text" >{{ item.children[0].name }}</span>
-                            </Menu-item>
                         </template>
+                        
                     </template>
                 </Menu>
             </i-col>
