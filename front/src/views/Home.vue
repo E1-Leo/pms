@@ -87,26 +87,26 @@
  
 </style>
 <template>
-    <div class="layout">
-        <Row type="flex">
-            <i-col span="5" class="layout-menu-left">
-                <Menu theme="dark" style="width: 100%;" :active-name="this.$route.path" :open-names="openNames" @on-select="mennuSelect">
-                    <div class="layout-logo-left">
-                        <span class="layout-text" style="color: rgba(255, 255, 255, 0.7);"> 人事管理系统</span>
+    <div class='layout'>
+        <Row type='flex'>
+            <i-col span='5' class='layout-menu-left'>
+                <Menu theme='dark' style='width: 100%;' :active-name='this.$route.path' :open-names='openNames' @on-select='mennuSelect'>
+                    <div class='layout-logo-left'>
+                        <span class='layout-text' style='color: rgba(255, 255, 255, 0.7);'> 人事管理系统</span>
                     </div>
-                    <template v-for="(item, index) in $router.options.routes">
-                        <template v-if="!item.hidden">
-                            <Submenu :key="index" :name="item.name" v-if="!item.leaf">
-                                <template slot="title">
-                                    <span class="layout-text">{{ item.name }}</span>
+                    <template v-for='(item, index) in $router.options.routes'>
+                        <template v-if='!item.hidden'>
+                            <Submenu :key='index' :name='item.name' v-if='!item.leaf'>
+                                <template slot='title'>
+                                    <span class='layout-text'>{{ item.name }}</span>
                                 </template>
-                                <template v-for="(child, index) in item.children">
-                                    <Menu-item :key="index" :name="child.path">{{ child.name }}</Menu-item>
+                                <template v-for='(child, index) in item.children'>
+                                    <Menu-item :key='index' :name='child.path'>{{ child.name }}</Menu-item>
                                 </template>
                             </Submenu>
-                            <template v-if=" item.leaf && item.children.length > 0 ">
-                                <Menu-item :key="index" :name="item.children[0].path">
-                                    <span class="layout-text" >{{ item.children[0].name }}</span>
+                            <template v-if=' item.leaf && item.children.length > 0 '>
+                                <Menu-item :key='index' :name='item.children[0].path'>
+                                    <span class='layout-text' >{{ item.children[0].name }}</span>
                                 </Menu-item>
                             </template>
                         </template>
@@ -114,29 +114,29 @@
                     </template>
                 </Menu>
             </i-col>
-            <i-col span="19">
-                <div class="layout-header">
-                    <div class="userinfo">
-                      <Dropdown placement="bottom-end">
-                        <span class="head-img">
+            <i-col span='19'>
+                <div class='layout-header'>
+                    <div class='userinfo'>
+                      <Dropdown placement='bottom-end'>
+                        <span class='head-img'>
                             {{ curUserName }}
-                            <img src="../assets/user.jpg">
+                            <img src='../assets/user.jpg'>
                         </span>
-                        <Dropdown-menu slot="list">
-                            <Dropdown-item @click.native="modifyPassWord()">修改密码</Dropdown-item>
-                            <Dropdown-item  @click.native="logout()" divided>退出</Dropdown-item>
+                        <Dropdown-menu slot='list'>
+                            <Dropdown-item @click.native='modifyPassWord()'>修改密码</Dropdown-item>
+                            <Dropdown-item  @click.native='logout()' divided>退出</Dropdown-item>
                         </Dropdown-menu>
                     </Dropdown>
                     </div>
                 </div>
-                <div class="layout-breadcrumb">
+                <div class='layout-breadcrumb'>
                     <Breadcrumb>
-                        <Breadcrumb-item href="#">应用中心</Breadcrumb-item>
+                        <Breadcrumb-item href='#'>应用中心</Breadcrumb-item>
                         <Breadcrumb-item>{{ $route.name }}</Breadcrumb-item>
                     </Breadcrumb>
                 </div>
-                <div class="layout-content">
-                    <div class="layout-content-main">
+                <div class='layout-content'>
+                    <div class='layout-content-main'>
                         <router-view></router-view>
                      </div>
                 </div>

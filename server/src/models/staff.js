@@ -1,4 +1,4 @@
-const dbUtils = require("../utils/db");
+const dbUtils = require('../utils/db');
 
 class StaffModal {
   /**
@@ -20,9 +20,9 @@ class StaffModal {
    * @return {object|null}    员工信息或null
    */
   static async createStaff(options) {
-    let insertResult = await dbUtils.insertData("staff", options);
+    let insertResult = await dbUtils.insertData('staff', options);
     if (insertResult && insertResult.insertId) {
-      let res = await dbUtils.findDataById("staff", insertResult.insertId);
+      let res = await dbUtils.findDataById('staff', insertResult.insertId);
       if (res && res.length > 0) {
         return res[0];
       }

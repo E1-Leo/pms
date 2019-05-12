@@ -1,15 +1,28 @@
-const dbUtils = require("../utils/db");
+const dbUtils = require('../utils/db');
 
-class PosiModal {
+class JobModal {
+
+  /**
+   * 查找职位列表
+   * @param {Array}     返回职位信息 
+   */
+  static async getJobList() {
+    let result = await dbUtils.selectAll('job');
+    if (Array.isArray(result) && result.length > 0) {
+      return result;
+    } else {
+      return [];
+    }
+  }
 
   /**
    * 根据职位查找职位
    * @param  {object} jobname   职位
    * @return {object|null}      返回职位信息或者null
    */
-  static async getPosiByJobName(jobname) {
-    let _sql = "SELECT * FROM ?? WHERE jobname = ? limit 1 ";
-    let result = await dbUtils.query(_sql, ["posi", jobname]);
+  static async getJobByJobName(jobname) {
+    let _sql = 'SELECT * FROM ?? WHERE jobname = ? limit 1 ';
+    let result = await dbUtils.query(_sql, ['job', jobname]);
     if (Array.isArray(result) && result.length > 0) {
       result = result[0];
     } else {
@@ -23,9 +36,9 @@ class PosiModal {
    * @param  {object} jobinfo   职位信息
    * @return {object|null}      返回职位信息或者null
    */
-  static async getPosiByJobInfo(jobinfo) {
-    let _sql = "SELECT * FROM ?? WHERE jobinfo = ? limit 1 ";
-    let result = await dbUtils.query(_sql, ["posi", jobinfo]);
+  static async getJobByJobInfo(jobinfo) {
+    let _sql = 'SELECT * FROM ?? WHERE jobinfo = ? limit 1 ';
+    let result = await dbUtils.query(_sql, ['job', jobinfo]);
     if (Array.isArray(result) && result.length > 0) {
       result = result[0];
     } else {
@@ -39,9 +52,9 @@ class PosiModal {
    * @param  {object} banci     班次
    * @return {object|null}      返回职位信息或者null
    */
-  static async getPosiByBanci(banci) {
-    let _sql = "SELECT * FROM ?? WHERE banci = ? limit 1 ";
-    let result = await dbUtils.query(_sql, ["posi", banci]);
+  static async getJobByBanci(banci) {
+    let _sql = 'SELECT * FROM ?? WHERE banci = ? limit 1 ';
+    let result = await dbUtils.query(_sql, ['job', banci]);
     if (Array.isArray(result) && result.length > 0) {
       result = result[0];
     } else {
@@ -55,35 +68,29 @@ class PosiModal {
    * @param  {object} options 姓名、部门、职位、入职时间
    * @return {object|null}    职位信息或null
    */
-  static async createposi(options) {
-    let result = await this.getPosiByJobName(options.jobname);
-    if (result) {
-      result = null;
-      return result;
-    }
-    result = await this.getPosiByJobInfo(options.jobinfo);
-    if (result) {
-      result = null;
-      return result;
-    }
-    result = await this.getPosiByBanci(options.banci);
-    if (result) {
-      result = null;
-      return result;
-    }
+  static async createJob(options) {
 
     let currentTime = new Date().getTime();
     options.createTime = currentTime;
     options.updateTime = currentTime;
-    let insertResult = await dbUtils.insertData("posi", options);
+    let insertResult = await dbUtils.insertData('job', options);
     if (insertResult && insertResult.insertId) {
-      let res = await dbUtils.findDataById("posi", insertResult.insertId);
+      let res = await dbUtils.findDataById('job', insertResult.insertId);
       if (res && res.length > 0) {
         result = res[0];
       }
     }
     return result;
   }
+
+  /**
+   * 删除职位
+   * @param {*} id
+   */
+  static async deleteJob(id) {
+    return await dbUtils.deleteDataById('job', id);
+  }
+
 }
 
-module.exports = PosiModal;
+module.exports = JobModal;

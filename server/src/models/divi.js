@@ -1,4 +1,4 @@
-const dbUtils = require("../utils/db");
+const dbUtils = require('../utils/db');
 
 class DiviModal {
   /**
@@ -7,8 +7,8 @@ class DiviModal {
    * @return {object|null}          返回部门信息或者null
    */
   static async getDiviByDepartment(department) {
-    let _sql = "SELECT * FROM ?? WHERE department = ? limit 1 ";
-    let result = await dbUtils.query(_sql, ["divi", department]);
+    let _sql = 'SELECT * FROM ?? WHERE department = ? limit 1 ';
+    let result = await dbUtils.query(_sql, ['divi', department]);
     if (Array.isArray(result) && result.length > 0) {
       result = result[0];
     } else {
@@ -23,8 +23,8 @@ class DiviModal {
    * @return {object|null}      返回部门信息或者null
    */
   static async getDiviByDepInfo(depinfo) {
-    let _sql = "SELECT * FROM ?? WHERE depinfo = ? limit 1 ";
-    let result = await dbUtils.query(_sql, ["divi", depinfo]);
+    let _sql = 'SELECT * FROM ?? WHERE depinfo = ? limit 1 ';
+    let result = await dbUtils.query(_sql, ['divi', depinfo]);
     if (Array.isArray(result) && result.length > 0) {
       result = result[0];
     } else {
@@ -53,9 +53,9 @@ class DiviModal {
     let currentTime = new Date().getTime();
     options.createTime = currentTime;
     options.updateTime = currentTime;
-    let insertResult = await dbUtils.insertData("Divi", options);
+    let insertResult = await dbUtils.insertData('Divi', options);
     if (insertResult && insertResult.insertId) {
-      let res = await dbUtils.findDataById("Divi", insertResult.insertId);
+      let res = await dbUtils.findDataById('Divi', insertResult.insertId);
       if (res && res.length > 0) {
         result = res[0];
       }

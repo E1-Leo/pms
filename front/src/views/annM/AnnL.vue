@@ -1,26 +1,26 @@
 <template>
   <div>
-    <Table border :columns="columns" :data="data3">
-      <template slot-scope="{ row }" slot="username">
+    <Table border :columns='columns' :data='data3'>
+      <template slot-scope='{ row }' slot='username'>
         <strong>{{ row.username }}</strong>
       </template>
-      <template slot-scope="{ row, index }" slot="action">
+      <template slot-scope='{ row, index }' slot='action'>
         <Button
-          type="primary"
-          size="small"
-          style="margin-right: 5px"
-          @click="show(index)"
+          type='primary'
+          size='small'
+          style='margin-right: 5px'
+          @click='show(index)'
           >View</Button
         >
-        <Button type="error" size="small" @click="remove(index)">Delete</Button>
+        <Button type='error' size='small' @click='remove(index)'>Delete</Button>
       </template>
     </Table>
-    <div class="page">
+    <div class='page'>
       <Page 
-        :total="total" 
-        :page-size="40" 
-        :current.sync="page" 
-        @on-change="currentChange">
+        :total='total' 
+        :page-size='40' 
+        :current.sync='page' 
+        @on-change='currentChange'>
       </Page>
     </div>
   </div>

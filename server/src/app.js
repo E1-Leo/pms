@@ -1,7 +1,7 @@
-const Koa = require("koa");
-const bodyParser = require("koa-bodyparser");
-const routers = require("./routes/index");
-const errorHandle = require("./middleswares/errorHandle");
+const Koa = require('koa');
+const bodyParser = require('koa-bodyparser');
+const routers = require('./routes/index');
+const errorHandle = require('./middleswares/errorHandle');
 
 class App {
   constructor() {

@@ -1,5 +1,5 @@
-const diviModel = require("../models/divi");
-const handle = require("../utils/handle");
+const diviModel = require('../models/divi');
+const handle = require('../utils/handle');
 
 class DiviController {
     /**
@@ -20,7 +20,7 @@ class DiviController {
      * @param {*}   ctx
      */
     static async createDivi(ctx) {
-        let result = handle.response(false, "创建失败", null, 201);
+        let result = handle.response(false, '创建失败', null, 201);
 
         let formData = ctx.request.body;
         let diviResult = await diviModel.createDivi({

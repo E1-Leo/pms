@@ -3,7 +3,7 @@ const userModel = require('./src/models/user');
 
 let argv = process.argv;
 if (argv.length < 5) {
-    console.error("请输入 username password department");
+    console.error('请输入 username password department');
     process.exit(1);
 }
 

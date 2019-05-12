@@ -19,7 +19,7 @@ class AnnController {
      * @param {*} ctx
      */
     static async createAnn(ctx) {
-        let result = handle.response(false, "创建失败", null, 201);
+        let result = handle.response(false, '创建失败', null, 201);
 
         let formData = ctx.request.body;
         let annResult = await annModel.createAnn({

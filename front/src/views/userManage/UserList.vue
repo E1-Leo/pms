@@ -1,8 +1,8 @@
 <template>
   <div>
     <Table border :columns='columns' :data='list'>
-      <template slot-scope='{ row }' slot='name'>
-        <strong>{{ row.name }}</strong>
+      <template slot-scope='{ row }' slot='username'>
+        <strong>{{ row.username }}</strong>
       </template>
       <template slot-scope='{ row, index }' slot='action'>
         <Button
@@ -40,23 +40,13 @@ export default {
           align: 'center'
         },
         {
-          title: '姓名',
-          slot: 'name',
+          title: '用户名',
+          slot: 'username',
           align: 'center'
         },
         {
           title: '部门',
           key: 'department',
-          align: 'center'
-        },
-        {
-          title: '职位',
-          key: 'jobname',
-          align: 'center'
-        },
-        {
-          title: '入职时间',
-          key: 'jobtime',
           align: 'center'
         },
         {
@@ -69,13 +59,12 @@ export default {
       list: []
     };
   },
-  
   created() {
     this.getList();
   },
   methods: {
     getList() {
-      axios.get('/api/staff/list')
+      axios.get('/api/user/List')
         .then(({data}) => {
           if(data.success) {
             this.list = data.data;
@@ -86,20 +75,18 @@ export default {
       this.$Modal.info({
         title: '用户信息',
         content: `序号：${this.list[index].id}<br>
-                  姓名: ${this.list[index].name}<br>
-                  部门：${this.list[index].department}<br>
-                  职位：${this.list[index].jobname}<br>
-                  入职时间：${this.list[index].jobtime}`
+                    用户名：${this.list[index].username}<br>
+                    部门：${this.list[index].department}`
       });
     },
     remove(id) {
-      axios.post('/api/staff/delete', {id: id})
+      axios.post('/api/user/delete', {id: id})
         .then(({data}) => {
           if(data.success) {
             let index = this.list.findIndex(function(obj) {
               return obj.id === id
             })
-            if (index >=0) {
+            if (index >= 0) {
               this.list.splice(index, 1);
             }
           }

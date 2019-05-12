@@ -41,21 +41,24 @@
 import axios from 'axios';
 export default {
   data() {
-    // const validateName = (rule, value, callback) => {
-    //   if (!value) {
-    //     return callback(new Error("姓名不能为空"));
-    //   }
-    // };
-    // const validatejobName = (rule, value, callback) => {
-    //   if (!value) {
-    //     return callback(new Error("职位不能为空"));
-    //   }
-    // };
-    // const validatejobTime = (rule, value, callback) => {
-    //   if (!value) {
-    //     return callback(new Error("入职时间不能为空"));
-    //   }
-    // };
+    const validateName = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('姓名不能为空'));
+      }
+      callback(); 
+    };
+    const validatejobName = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('职位不能为空'));
+      }
+      callback(); 
+    };
+    const validatejobTime = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('入职时间不能为空'));
+      }
+      callback(); 
+    };
 
     return {
       formCustom: {
@@ -66,46 +69,46 @@ export default {
       },
       ruleCustom: {
         name: [
-          { required: true, message: '请填写用户名', trigger: 'blur' }
+          { validator: validateName, trigger: 'blur' }
         ],
         department: [
-          { required: true, message: '请填写用户名', trigger: 'blur' }
+          { validator: validatejobName, trigger: 'blur' }
         ],
         jobName: [
-          { required: true, message: '请填写用户名', trigger: 'blur' }
+          { validator: validatejobTime, trigger: 'blur' }
         ]
       },
       options1: {
         shortcuts: [
           {
-            text: "Today",
+            text: 'Today',
             value() {
               return new Date();
             },
             onClick: picker => {
-              this.$Message.info("Click today");
+              this.$Message.info('Click today');
             }
           },
           {
-            text: "Yesterday",
+            text: 'Yesterday',
             value() {
               const date = new Date();
               date.setTime(date.getTime() - 3600 * 1000 * 24);
               return date;
             },
             onClick: picker => {
-              this.$Message.info("Click yesterday");
+              this.$Message.info('Click yesterday');
             }
           },
           {
-            text: "One week",
+            text: 'One week',
             value() {
               const date = new Date();
               date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
               return date;
             },
             onClick: picker => {
-              this.$Message.info("Click a week ago");
+              this.$Message.info('Click a week ago');
             }
           }
         ]
@@ -129,7 +132,7 @@ export default {
             }
           });
         } else {
-          this.$Message.error("Fail!");
+          this.$Message.error('Fail!');
         }
       });
     },

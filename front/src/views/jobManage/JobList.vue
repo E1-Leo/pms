@@ -1,8 +1,8 @@
 <template>
   <div>
     <Table border :columns='columns' :data='list'>
-      <template slot-scope='{ row }' slot='name'>
-        <strong>{{ row.name }}</strong>
+      <template slot-scope='{ row }' slot='jobname'>
+        <strong>{{ row.jobname }}</strong>
       </template>
       <template slot-scope='{ row, index }' slot='action'>
         <Button
@@ -35,28 +35,23 @@ export default {
       page: 1,
       columns: [
         {
-          title: '编号',
+          title: '序号',
           key: 'id',
           align: 'center'
         },
         {
-          title: '姓名',
-          slot: 'name',
+          title: '职位名',
+          slot: 'jobname',
           align: 'center'
         },
         {
-          title: '部门',
-          key: 'department',
+          title: '职位信息',
+          key: 'jobinfo',
           align: 'center'
         },
         {
-          title: '职位',
-          key: 'jobname',
-          align: 'center'
-        },
-        {
-          title: '入职时间',
-          key: 'jobtime',
+          title: '班次',
+          key: 'banci',
           align: 'center'
         },
         {
@@ -69,13 +64,12 @@ export default {
       list: []
     };
   },
-  
   created() {
     this.getList();
   },
   methods: {
     getList() {
-      axios.get('/api/staff/list')
+      axios.get('/api/job/list')
         .then(({data}) => {
           if(data.success) {
             this.list = data.data;
@@ -86,20 +80,19 @@ export default {
       this.$Modal.info({
         title: '用户信息',
         content: `序号：${this.list[index].id}<br>
-                  姓名: ${this.list[index].name}<br>
-                  部门：${this.list[index].department}<br>
-                  职位：${this.list[index].jobname}<br>
-                  入职时间：${this.list[index].jobtime}`
+                  职位名：${this.list[index].jobname}<br>
+                  职位信息：${this.list[index].jobinfo}<br>
+                  班次：${this.list[index].banci}`
       });
     },
     remove(id) {
-      axios.post('/api/staff/delete', {id: id})
+      axios.post('/api/job/delete', {id: id})
         .then(({data}) => {
-          if(data.success) {
+          if (data.success) {
             let index = this.list.findIndex(function(obj) {
               return obj.id === id
             })
-            if (index >=0) {
+            if (index >= 0) {
               this.list.splice(index, 1);
             }
           }

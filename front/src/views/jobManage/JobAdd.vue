@@ -30,39 +30,43 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   data() {
     const validatejobName = (rule, value, callback) => {
       if (!value) {
-        return callback(new Error("职位名不能为空"));
+        return callback(new Error('职位名不能为空'));
       }
+      callback();
     };
     const validatejobInfo = (rule, value, callback) => {
       if (!value) {
-        return callback(new Error("职位信息不能为空"));
+        return callback(new Error('职位信息不能为空'));
       }
+      callback();
     };
     const validatebanci = (rule, value, callback) => {
       if (!value) {
-        return callback(new Error("班次不能为空"));
+        return callback(new Error('班次不能为空'));
       }
+      callback();
     };
 
     return {
       formCustom: {
-        jobName: "",
-        jobInfo: "",
+        jobName: '',
+        jobInfo: '',
         banci: '',
       },
       ruleCustom: {
         jobName: [
-          { validator: validatejobName, trigger: "blur" }
+          { validator: validatejobName, trigger: 'blur' }
         ],
         jobInfo: [
-          { validator: validatejobInfo, trigger: "blur" }
+          { validator: validatejobInfo, trigger: 'blur' }
         ],
         banci: [
-          { validator: validatebanci, trigger: "blur" }
+          { validator: validatebanci, trigger: 'blur' }
         ]
       }
     };
@@ -71,9 +75,11 @@ export default {
     handleSubmit(name) {
       this.$refs[name].validate(valid => {
         if (valid) {
-          this.$Message.success("Success!");
+
+
+          this.$Message.success('Success!');
         } else {
-          this.$Message.error("Fail!");
+          this.$Message.error('Fail!');
         }
       });
     },

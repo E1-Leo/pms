@@ -2,13 +2,13 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Login from './views/Login.vue';  //登录页
 import Home from './views/Home.vue';
-import UserQ from './views/userManage/UserQ.vue';  //用户查询
+import UserList from './views/userManage/UserList.vue';  //用户查询
 import UserAdd from './views/userManage/UserAdd.vue';  //添加用户
 import NotFound from './views/404.vue'; //404
 import DiviL from './views/diviM/DiviL.vue';  //部门列表
 import DiviAdd from './views/diviM/DiviAdd.vue';  //添加部门
-import PosiL from './views/posiM/PosiL.vue';  //职位列表
-import PosiAdd from './views/posiM/PosiAdd.vue';  //添加职位
+import JobList from './views/jobManage/JobList.vue';  //职位列表
+import JobAdd from './views/jobManage/JobAdd.vue';  //添加职位
 import StaffList from './views/staffManage/StaffList.vue';  //员工列表
 import StaffAdd from './views/staffManage/StaffAdd.vue';  //添加员工
 import AnnL from './views/annM/AnnL.vue';  //公告列表
@@ -34,7 +34,7 @@ export default [
     name: '用户管理',
     component: Home,
     children: [
-      { path: '/userq', component: UserQ, name: '用户查询' },
+      { path: '/userlist', component: UserList, name: '用户列表' },
       { path: '/useradd', component: UserAdd, name: '添加用户' }
     ]
   },
@@ -52,8 +52,8 @@ export default [
     name: '职位管理',
     component: Home,
     children: [
-      { path: '/posil', component: PosiL, name: '职位列表' },
-      { path: '/posiadd', component: PosiAdd, name: '添加职位' }
+      { path: '/joblist', component: JobList, name: '职位列表' },
+      { path: '/jobadd', component: JobAdd, name: '添加职位' }
     ]
   },
   {

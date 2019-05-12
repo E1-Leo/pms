@@ -1,4 +1,4 @@
-const dbUtils = require("../utils/db");
+const dbUtils = require('../utils/db');
 
 class AnnModal {
   /**
@@ -7,8 +7,8 @@ class AnnModal {
    * @return {object|null}          返回公告信息或者null
    */
   static async getAnnByAnnTitle(anntitle) {
-    let _sql = "SELECT * FROM ?? WHERE anntitle = ? limit 1 ";
-    let result = await dbUtils.query(_sql, ["ann", anntitle]);
+    let _sql = 'SELECT * FROM ?? WHERE anntitle = ? limit 1 ';
+    let result = await dbUtils.query(_sql, ['ann', anntitle]);
     if (Array.isArray(result) && result.length > 0) {
       result = result[0];
     } else {
@@ -23,8 +23,8 @@ class AnnModal {
    * @return {object|null}      返回公告信息或者null
    */
   static async getAnnByAnnInfo(anninfo) {
-    let _sql = "SELECT * FROM ?? WHERE anninfo = ? limit 1 ";
-    let result = await dbUtils.query(_sql, ["ann", anninfo]);
+    let _sql = 'SELECT * FROM ?? WHERE anninfo = ? limit 1 ';
+    let result = await dbUtils.query(_sql, ['ann', anninfo]);
     if (Array.isArray(result) && result.length > 0) {
       result = result[0];
     } else {
@@ -39,8 +39,8 @@ class AnnModal {
    * @return {object|null}      返回公告信息或者null
    */
   static async getAnnByTime(time) {
-    let _sql = "SELECT * FROM ?? WHERE time = ? limit 1 ";
-    let result = await dbUtils.query(_sql, ["ann", time]);
+    let _sql = 'SELECT * FROM ?? WHERE time = ? limit 1 ';
+    let result = await dbUtils.query(_sql, ['ann', time]);
     if (Array.isArray(result) && result.length > 0) {
       result = result[0];
     } else {
@@ -55,7 +55,7 @@ class AnnModal {
    * @return {object|null}      返回公告信息或者null
   */
  static async getUserByUserName(username) {
-    let _sql = "SELECT * FROM ?? WHERE username = ? limit 1 "
+    let _sql = 'SELECT * FROM ?? WHERE username = ? limit 1 '
     let result = await dbUtils.query(_sql, ['user', username])
     if (Array.isArray(result) && result.length > 0) {
       result = result[0];
@@ -95,9 +95,9 @@ class AnnModal {
     let currentTime = new Date().getTime();
     options.createTime = currentTime;
     options.updateTime = currentTime;
-    let insertResult = await dbUtils.insertData("ann", options);
+    let insertResult = await dbUtils.insertData('ann', options);
     if (insertResult && insertResult.insertId) {
-      let res = await dbUtils.findDataById("ann", insertResult.insertId);
+      let res = await dbUtils.findDataById('ann', insertResult.insertId);
       if (res && res.length > 0) {
         result = res[0];
       }
