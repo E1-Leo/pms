@@ -74,9 +74,9 @@ export default {
     show(index) {
       this.$Modal.info({
         title: '用户信息',
-        content: `序号：${this.list[index].id}<br>
-                    用户名：${this.list[index].username}<br>
-                    部门：${this.list[index].department}`
+        content: `编号：${this.list[index].id}<br>
+                  用户名：${this.list[index].username}<br>
+                  部门：${this.list[index].department}`
       });
     },
     remove(id) {

@@ -128,7 +128,7 @@ export default {
           .then(({data}) => {
             if( data.success ) {
               this.$Message.success('提交成功!');
-              this.$router.push('/staffl')
+              this.$router.push('/stafflist')
             }
           });
         } else {

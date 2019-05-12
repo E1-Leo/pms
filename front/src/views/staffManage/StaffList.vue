@@ -85,7 +85,7 @@ export default {
     show(index) {
       this.$Modal.info({
         title: '用户信息',
-        content: `序号：${this.list[index].id}<br>
+        content: `编号：${this.list[index].id}<br>
                   姓名: ${this.list[index].name}<br>
                   部门：${this.list[index].department}<br>
                   职位：${this.list[index].jobname}<br>

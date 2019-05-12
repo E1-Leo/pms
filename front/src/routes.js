@@ -7,8 +7,6 @@ import UserAdd from './views/userManage/UserAdd.vue';  //添加用户
 import NotFound from './views/404.vue'; //404
 import DiviL from './views/diviM/DiviL.vue';  //部门列表
 import DiviAdd from './views/diviM/DiviAdd.vue';  //添加部门
-import JobList from './views/jobManage/JobList.vue';  //职位列表
-import JobAdd from './views/jobManage/JobAdd.vue';  //添加职位
 import StaffList from './views/staffManage/StaffList.vue';  //员工列表
 import StaffAdd from './views/staffManage/StaffAdd.vue';  //添加员工
 import AnnL from './views/annM/AnnL.vue';  //公告列表
@@ -45,15 +43,6 @@ export default [
     children: [
       { path: '/divil', component: DiviL, name: '部门列表' },
       { path: '/diviadd', component: DiviAdd, name: '添加部门' }
-    ]
-  },
-  {
-    path: '/',
-    name: '职位管理',
-    component: Home,
-    children: [
-      { path: '/joblist', component: JobList, name: '职位列表' },
-      { path: '/jobadd', component: JobAdd, name: '添加职位' }
     ]
   },
   {
