@@ -1,16 +1,16 @@
-const diviModel = require('../models/divi');
+const departmentModel = require('../models/department');
 const handle = require('../utils/handle');
 
-class DiviController {
+class DepartmentController {
     /**
      * 获取部门列表
      */
-    static async getDiviList(ctx) {
+    static async getDepartmentList(ctx) {
         let result = handle.response(false, '获取列表失败', null, 201);
 
-        let diviResult = await diviModel.getDiviList();
-        if (diviResult) {
-            result = handle.response(true, '', diviResult, 200);
+        let departmentResult = await departmentModel.getDepartmentList();
+        if (departmentResult) {
+            result = handle.response(true, '', departmentResult, 200);
         }
         ctx.body = result;
     }
@@ -19,16 +19,16 @@ class DiviController {
      * 添加部门
      * @param {*}   ctx
      */
-    static async createDivi(ctx) {
+    static async createDepartment(ctx) {
         let result = handle.response(false, '创建失败', null, 201);
 
         let formData = ctx.request.body;
-        let diviResult = await diviModel.createDivi({
+        let departmentResult = await departmentModel.createDepartment({
             department: formData.department,
-            depinfo: formData.depinfo,
+            departmentinfo: formData.departmentinfo,
         });
-        if (diviResult) {
-            result = handle.response(true, '', diviResult, 200);
+        if (departmentResult) {
+            result = handle.response(true, '', departmentResult, 200);
         }
         ctx.body = result;
     }
@@ -37,11 +37,11 @@ class DiviController {
      * 删除部门
      * @param {*} ctx
      */
-    static async deleteDivi(ctx) {
+    static async deleteDepartment(ctx) {
         let result = handle.response(false, '删除失败', null, 201);
 
         let formData = ctx.request.body;
-        await diviModel.deleteDivi(formData.id);
+        await departmentModel.deleteDepartment(formData.id);
         result = handle.response(true, '删除成功', null, 200);
 
         ctx.body = result;
@@ -49,4 +49,4 @@ class DiviController {
 
 }
 
-module.exports = DiviController;
+module.exports = DepartmentController;

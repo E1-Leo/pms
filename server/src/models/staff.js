@@ -3,14 +3,18 @@ const dbUtils = require('../utils/db');
 class StaffModal {
   /**
    * 查找员工列表
-   * @return {Array}    返回员工信息
+   * @return {Array} 返回员工信息
+   * @param {Number} offset 从第offset页开始查询
+   * @param {Number} pageSize 每次查询条数
    */
-  static async getStaffList() {
-    let result = await dbUtils.selectAll('staff');
+  static async getStaffList(offset, pageSize) {
+    let totalResult = await dbUtils.selectAll('staff');
+    let result = await dbUtils.findDataByPage('staff', '*', offset, pageSize);
     if (Array.isArray(result) && result.length > 0) {
-      return result;
+      return { list: result, total: totalResult.length};
     } else {
-      return [];
+      result = [];
+      return { result, total: 0};
     }
   }
 

@@ -5,8 +5,8 @@ import Home from './views/Home.vue';
 import UserList from './views/userManage/UserList.vue';  //用户查询
 import UserAdd from './views/userManage/UserAdd.vue';  //添加用户
 import NotFound from './views/404.vue'; //404
-import DiviL from './views/diviM/DiviL.vue';  //部门列表
-import DiviAdd from './views/diviM/DiviAdd.vue';  //添加部门
+import DepartmentList from './views/departmentManage/DepartmentList.vue';  //部门列表
+import DepartmentAdd from './views/departmentManage/DepartmentAdd.vue';  //添加部门
 import StaffList from './views/staffManage/StaffList.vue';  //员工列表
 import StaffAdd from './views/staffManage/StaffAdd.vue';  //添加员工
 import AnnL from './views/annM/AnnL.vue';  //公告列表
@@ -41,8 +41,8 @@ export default [
     name: '部门管理',
     component: Home,
     children: [
-      { path: '/divil', component: DiviL, name: '部门列表' },
-      { path: '/diviadd', component: DiviAdd, name: '添加部门' }
+      { path: '/departmentlist', component: DepartmentList, name: '部门列表' },
+      { path: '/departmentadd', component: DepartmentAdd, name: '添加部门' }
     ]
   },
   {

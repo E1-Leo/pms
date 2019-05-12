@@ -1,8 +1,8 @@
 <template>
   <div>
     <Table border :columns='columns' :data='list'>
-      <template slot-scope='{ row }' slot='name'>
-        <strong>{{ row.name }}</strong>
+      <template slot-scope='{ row }' slot='department'>
+        <strong>{{ row.department }}</strong>
       </template>
       <template slot-scope='{ row, index }' slot='action'>
         <Button
@@ -18,7 +18,7 @@
     <div class='page'>
       <Page 
         :total='total' 
-        :page-size='pageSize' 
+        :page-size='5' 
         :current.sync='page' 
         @on-change='currentChange'>
       </Page>
@@ -29,11 +29,11 @@
 <script>
 import axios from 'axios';
 export default {
+  name: 'UserQ',
   data() {
     return {
-      total: 0,
+      total: 9999,
       page: 1,
-      pageSize: 4,
       columns: [
         {
           title: '编号',
@@ -41,23 +41,13 @@ export default {
           align: 'center'
         },
         {
-          title: '姓名',
-          slot: 'name',
+          title: '部门名',
+          slot: 'department',
           align: 'center'
         },
         {
-          title: '部门',
-          key: 'department',
-          align: 'center'
-        },
-        {
-          title: '职位',
-          key: 'jobname',
-          align: 'center'
-        },
-        {
-          title: '入职时间',
-          key: 'jobtime',
+          title: '部门信息',
+          key: 'departmentinfo',
           align: 'center'
         },
         {
@@ -69,18 +59,16 @@ export default {
       ],
       list: []
     };
-  },  
+  },
   created() {
-    this.getList(this.page);
+    this.getList();
   },
   methods: {
-    getList(page = 1) {
-      let offset = this.pageSize*(page-1);
-      axios.get('/api/staff/list?offset='+offset+'&pageSize='+this.pageSize)
+    getList() {
+      axios.get('/api/department/list')
         .then(({data}) => {
           if(data.success) {
-            this.list = data.res.list;
-            this.total = data.res.total;
+            this.list = data.data;
           }
         })
     },
@@ -88,27 +76,24 @@ export default {
       this.$Modal.info({
         title: '用户信息',
         content: `编号：${this.list[index].id}<br>
-                  姓名: ${this.list[index].name}<br>
                   部门：${this.list[index].department}<br>
-                  职位：${this.list[index].jobname}<br>
-                  入职时间：${this.list[index].jobtime}`
+                  部门信息：${this.list[index].departmentinfo}`
       });
     },
     remove(id) {
-      axios.post('/api/staff/delete', {id: id})
+      axios.post('/api/department/delete', {id: id})
         .then(({data}) => {
           if(data.success) {
             let index = this.list.findIndex(function(obj) {
               return obj.id === id
             })
-            if (index >=0) {
+            if (index >= 0) {
               this.list.splice(index, 1);
-            }
+            } 
           }
         })
     },
     currentChange (page) {
-      this.getList(page);
       this.$router.push({
           name: this.$route.name,
           query: {

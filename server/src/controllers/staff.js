@@ -7,8 +7,9 @@ class StaffController {
    */
   static async getStaffList(ctx) {
     let result = handle.response(false, '获取列表失败', null, 201);
-
-    let staffResult = await staffModel.getStaffList();
+    let offset = parseInt(ctx.request.query.offset);
+    let pageSize = parseInt(ctx.request.query.pageSize);
+    let staffResult = await staffModel.getStaffList(offset, pageSize);
     if (staffResult) {
       result = handle.response(true, '', staffResult, 200);
     }
