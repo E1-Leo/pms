@@ -9,8 +9,8 @@ import DepartmentList from './views/departmentManage/DepartmentList.vue';  //部
 import DepartmentAdd from './views/departmentManage/DepartmentAdd.vue';  //添加部门
 import StaffList from './views/staffManage/StaffList.vue';  //员工列表
 import StaffAdd from './views/staffManage/StaffAdd.vue';  //添加员工
-import AnnL from './views/annM/AnnL.vue';  //公告列表
-import AnnAdd from './views/annM/AnnAdd.vue';  //添加公告
+import AnnouncementList from './views/announcementManage/AnnouncementList.vue';  //公告列表
+import AnnouncementAdd from './views/announcementManage/AnnouncementAdd.vue';  //添加公告
 
 Vue.use(Router);
 
@@ -59,8 +59,8 @@ export default [
     name: '公告管理',
     component: Home,
     children: [
-      { path: '/annl', component: AnnL, name: '公告列表' },
-      { path: '/annadd', component: AnnAdd, name: '添加公告' }
+      { path: '/announcementlist', component: AnnouncementList, name: '公告列表' },
+      { path: '/announcementadd', component: AnnouncementAdd, name: '添加公告' }
     ]
   },
   {

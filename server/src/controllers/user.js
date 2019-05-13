@@ -11,18 +11,13 @@ class UserController {
    */
   static async signIn(ctx) {
     let formData = ctx.request.body;
-    let result = {
-      success: false,
-      message: '',
-      data: null,
-      code: ''
-    };
+    let result = handle.response(false, '登录失败', null, 201);
     let userResult = await userModel.getUserByUserName(formData.username);
     if (userResult) {
+      // 解密加密密码 与输入的密码比较
       if (await bcrypt.compare(formData.password, userResult.password)) {
-        result.success = true;
         delete userResult.password;
-        result.data = userResult;
+        result = handle.response(true, '登录成功', userResult, 200);
         let token = jsonwebtoken.sign(
           {
             data: userResult,
@@ -32,14 +27,12 @@ class UserController {
         );
         ctx.cookies.set('token', token);
       } else {
-        result.message = handle.message.FAIL_USER_NAME_OR_PASSWORD_ERROR;
-        result.code = '-1';
+        result = handle.response(false, '密码错误', null, 201);
       }
     } else {
-      result.code = 'FAIL_USER_NO_EXIST';
-      result.message = handle.message.FAIL_USER_NO_EXIST;
+      result = handle.response(false, '用户不存在', null, 201);
     }
-    ctx.body = result;
+    ctx.body = result; 
   }
 
   /**

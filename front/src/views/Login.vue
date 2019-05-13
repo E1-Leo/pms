@@ -88,9 +88,9 @@ export default {
         if (valid) {
           axios.post('/api/user/signIn', { username: this.formLogin.username, password: this.formLogin.password })
             .then((res) => {
-              if( res.success ) {
+              if( res.data.success ) {
                 this.$Message.success('提交成功!');
-                this.$router.push({ path: '/UserQ' });
+                this.$router.push({ path: '/userlist' });
               }
             });
         } else {

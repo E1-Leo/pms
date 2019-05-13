@@ -18,7 +18,7 @@
     <div class='page'>
       <Page 
         :total='total' 
-        :page-size='40' 
+        :page-size='pageSize' 
         :current.sync='page' 
         @on-change='currentChange'>
       </Page>
@@ -33,6 +33,7 @@ export default {
     return {
       total: 9999,
       page: 1,
+      pageSize: 10,
       columns: [
         {
           title: '编号',
@@ -67,7 +68,7 @@ export default {
       axios.get('/api/user/List')
         .then(({data}) => {
           if(data.success) {
-            this.list = data.data;
+            this.list = data.res;
           }
         })
     },

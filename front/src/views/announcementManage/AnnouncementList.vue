@@ -1,8 +1,8 @@
 <template>
   <div>
     <Table border :columns='columns' :data='list'>
-      <template slot-scope='{ row }' slot='name'>
-        <strong>{{ row.name }}</strong>
+      <template slot-scope='{ row }' slot='publishname'>
+        <strong>{{ row.publishname }}</strong>
       </template>
       <template slot-scope='{ row, index }' slot='action'>
         <Button
@@ -41,23 +41,23 @@ export default {
           align: 'center'
         },
         {
-          title: '姓名',
-          slot: 'name',
+          title: '公告标题',
+          key: 'announcementtitle',
           align: 'center'
         },
         {
-          title: '部门',
-          key: 'department',
+          title: '公告内容',
+          key: 'announcementinfo',
           align: 'center'
         },
         {
-          title: '职位',
-          key: 'jobname',
+          title: '发布时间',
+          key: 'publishtime',
           align: 'center'
         },
         {
-          title: '入职时间',
-          key: 'jobtime',
+          title: '发布人',
+          slot: 'publishname',
           align: 'center'
         },
         {
@@ -69,14 +69,14 @@ export default {
       ],
       list: []
     };
-  },  
+  },
   created() {
     this.getList(this.page);
   },
   methods: {
     getList(page = 1) {
       let offset = this.pageSize*(page-1);
-      axios.get('/api/staff/list?offset='+offset+'&pageSize='+this.pageSize)
+      axios.get('/api/announcement/list?offset='+offset+'&pageSize='+this.pageSize)
         .then(({data}) => {
           if(data.success) {
             this.list = data.res.list;
@@ -88,14 +88,14 @@ export default {
       this.$Modal.info({
         title: '用户信息',
         content: `编号：${this.list[index].id}<br>
-                  姓名: ${this.list[index].name}<br>
-                  部门：${this.list[index].department}<br>
-                  职位：${this.list[index].jobname}<br>
-                  入职时间：${this.list[index].jobtime}`
+                  公告标题：${this.list[index].announcementtitle}<br>
+                  公告内容：${this.list[index].announcementinfo}<br>
+                  发布时间：${this.list[index].publishtime}<br>
+                  发布人：${this.list[index].publishname}`
       });
     },
     remove(id) {
-      axios.post('/api/staff/delete', {id: id})
+      axios.post('/api/announcement/delete', {id: id})
         .then(({data}) => {
           if(data.success) {
             let index = this.list.findIndex(function(obj) {

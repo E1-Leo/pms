@@ -89,12 +89,12 @@ export default {
           })
           .then(({data}) => {
             if ( data.success ) {
-              this.$Message.success('Success!');
+              this.$Message.success('添加成功!');
               this.$router.push('/userlist')
             }
           });
         } else {
-          this.$Message.error('Fail!');
+          this.$Message.error('提交失败!');
         }
       });
     },

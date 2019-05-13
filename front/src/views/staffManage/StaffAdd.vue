@@ -132,7 +132,7 @@ export default {
             }
           });
         } else {
-          this.$Message.error('Fail!');
+          this.$Message.error('提交失败!');
         }
       });
     },
