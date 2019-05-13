@@ -72,17 +72,38 @@ class UserController {
     let result = handle.response(false, '创建失败', null, 201);
 
     let formData = ctx.request.body;
-    let userResult = await userModel.createUser({
-      username: formData.username,
-      department: formData.department
+    let password = await bcrypt.hash(formData.password, 10).then(function (password) {
+      return password;
+    }).catch(function (e) {
+      let result = handle.response(true, '创建失败', null, 201);
+      ctx.body = result;
+      return result;
     });
 
+    let userResult = await userModel.createUser({
+      username: formData.username,
+      password: password
+    });
     if (userResult) {
       result = handle.response(true, '创建成功', null, 200);
     }
     ctx.body = result;
   }
 
+  /**
+   * 更新用户
+   * @param {*} ctx 
+   */
+  static async updateUser(ctx) {
+    let result = handle.response(false, '更新失败', null, 201);
+    let formData = ctx.request.body;
+    let userResult = await userModel.updateUser(formData);
+    if (userResult) {
+      result = handle.response(true, '更新成功', null, 200);
+    }
+    ctx.body = result;
+  }
+  
   /**
    * 删除用户
    * @param {*} ctx

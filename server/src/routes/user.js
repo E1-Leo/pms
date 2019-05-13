@@ -10,6 +10,7 @@ const routers = router
   .get('/user/signOut', userController.signOut)
   
   .get('/user/List', userController.getUserList)
+  .post('/user/update', userController.updateUser)
   .post('/user/create', userController.createUser)
   .post('/user/delete', userController.deleteUser)
   

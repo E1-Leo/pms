@@ -5,20 +5,11 @@
         <FormItem label="用户名" prop="username">
           <Input type="text" v-model="formCustom.username"/>
         </FormItem>
-        <FormItem label="密码" prop="passwd">
-          <Input type="password" v-model="formCustom.passwd"/>
+        <FormItem label="密码" prop="password">
+          <Input type="password" v-model="formCustom.password"/>
         </FormItem>
-        <FormItem label="确认密码" prop="passwdCheck">
-          <Input type="password" v-model="formCustom.passwdCheck"/>
-        </FormItem>
-        <FormItem label="部门" prop="department">
-          <Select style="width:200px" v-model="formCustom.department">
-            <Option value="行政部">行政部</Option>
-            <Option value="技术部">技术部</Option>
-            <Option value="运营部">运营部</Option>
-            <Option value="财务部">财务部</Option>
-            <Option value="销售部">销售部</Option>
-          </Select>
+        <FormItem label="确认密码" prop="passwordCheck">
+          <Input type="password" v-model="formCustom.passwordCheck"/>
         </FormItem>
         <FormItem>
           <i-button
@@ -41,9 +32,9 @@ export default {
       if (value === '') {
         callback(new Error('请输入您的密码'));
       } else {
-        if (this.formCustom.passwdCheck !== '') {
+        if (this.formCustom.passwordCheck !== '') {
           // 对第二个密码框单独验证
-          this.$refs.formCustom.validateField('passwdCheck');
+          this.$refs.formCustom.validateField('passwordCheck');
         }
         callback();
       }
@@ -51,7 +42,7 @@ export default {
     const validatePassCheck = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请重新输入您的密码'));
-      } else if (value !== this.formCustom.passwd) {
+      } else if (value !== this.formCustom.password) {
         callback(new Error('两个密码不一样!'));
       } else {
         callback();
@@ -67,13 +58,12 @@ export default {
     return {
       formCustom: {
         username: '',
-        passwd: '',
-        passwdCheck: '',
-        department: ''
+        password: '',
+        passwordCheck: ''
       },
       ruleCustom: {
-        passwd: [{ validator: validatePass, trigger: 'blur' }],
-        passwdCheck: [{ validator: validatePassCheck, trigger: 'blur' }],
+        password: [{ validator: validatePass, trigger: 'blur' }],
+        passwordCheck: [{ validator: validatePassCheck, trigger: 'blur' }],
         username: [{ validator: validatelogName, trigger: 'blur' }]
       }
     };
@@ -84,8 +74,7 @@ export default {
         if (valid) {
           axios.post('/api/user/create', {
             username: this.formCustom.username,
-            passwd: this.formCustom.passwd,
-            department: this.formCustom.department
+            password: this.formCustom.password
           })
           .then(({data}) => {
             if ( data.success ) {

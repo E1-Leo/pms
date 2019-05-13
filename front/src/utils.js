@@ -21,6 +21,6 @@ function parseTime(timestamp, fmt) {
     return f;
 }
 
-module.exports = {
+export default {
     parseTime
 }

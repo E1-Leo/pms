@@ -7,11 +7,7 @@
         </FormItem>
         <FormItem label="部门" prop="department">
           <Select style="width:200px" v-model="formCustom.department">
-            <Option value="行政部">行政部</Option>
-            <Option value="技术部">技术部</Option>
-            <Option value="运营部">运营部</Option>
-            <Option value="财务部">财务部</Option>
-            <Option value="销售部">销售部</Option>
+            <Option v-for="item in departmentList" :key="item.id" :value="item.id">{{ item.department }}</Option>
           </Select>
         </FormItem>
         <FormItem label="职位名" prop="jobName">
@@ -71,13 +67,14 @@ export default {
         name: [
           { validator: validateName, trigger: 'blur' }
         ],
-        department: [
+        jobName: [
           { validator: validatejobName, trigger: 'blur' }
         ],
-        jobName: [
+        jobTime: [
           { validator: validatejobTime, trigger: 'blur' }
         ]
       },
+      departmentList: [],
       options1: {
         shortcuts: [
           {
@@ -115,7 +112,18 @@ export default {
       }
     };
   },
+  created() {
+    this.getdepartment();
+  },
   methods: {
+    getdepartment(page = 1) {
+      axios.get('/api/department/list?offset=0&pageSize=999')
+        .then(({data}) => {
+          if( data.success ) {
+            this.departmentList = data.res.list;
+          }
+        })
+    },
     handleSubmit(name) {
       this.$refs[name].validate(valid => {
         if (valid) {

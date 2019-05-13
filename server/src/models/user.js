@@ -52,12 +52,12 @@ class UserModal {
   }
 
   /**
-   * 根据用户名、密码、部门创建用户
-   * @param  {object} options 用户名、密码、部门
+   * 根据用户名、密码创建用户
+   * @param  {object} options 用户名、密码
    * @return {object|null}    用户信息或null
    */
   static async createUser(options) {
-    let result
+    let result;
     let insertResult = await dbUtils.insertData('user', options);
     if (insertResult && insertResult.insertId) {
       let res = await dbUtils.findDataById('user', insertResult.insertId)
@@ -66,6 +66,15 @@ class UserModal {
       }
     }
     return result;
+  }
+
+  /**
+   * 更新用户
+   * @param {object} options  
+   */
+  static async updateUser(options) {
+    let updateResult = await dbUtils.updateData('user', options, options.id);
+    return updateResult;
   }
 
   /**

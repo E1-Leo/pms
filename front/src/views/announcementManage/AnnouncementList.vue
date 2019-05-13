@@ -29,6 +29,7 @@
 
 <script>
 import axios from 'axios';
+import utils from '../../utils.js';
 export default {
   data() {
     return {
@@ -54,7 +55,10 @@ export default {
         {
           title: '发布时间',
           key: 'publishtime',
-          align: 'center'
+          align: 'center',
+          render: (h, params) => {
+            return h('span', this.getTime(params.row.publishtime));
+          }
         },
         {
           title: '发布人',
@@ -75,6 +79,10 @@ export default {
     this.getList(this.page);
   },
   methods: {
+    getTime(publishtime) {
+      let time = utils.parseTime(publishtime, 'yyyy-MM-dd');
+      return time;
+    },
     getList(page = 1) {
       let offset = this.pageSize*(page-1);
       axios.get('/api/announcement/list?offset='+offset+'&pageSize='+this.pageSize)
@@ -87,11 +95,11 @@ export default {
     },
     show(index) {
       this.$Modal.info({
-        title: '用户信息',
+        title: '公告信息',
         content: `编号：${this.list[index].id}<br>
                   公告标题：${this.list[index].announcementtitle}<br>
                   公告内容：${this.list[index].announcementinfo}<br>
-                  发布时间：${this.list[index].publishtime}<br>
+                  发布时间：${this.getTime(this.list[index].publishtime)}<br>
                   发布人：${this.list[index].publishname}`
       });
     },

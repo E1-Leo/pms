@@ -77,7 +77,7 @@ export default {
     },
     show(index) {
       this.$Modal.info({
-        title: '用户信息',
+        title: '部门信息',
         content: `编号：${this.list[index].id}<br>
                   部门：${this.list[index].department}<br>
                   部门信息：${this.list[index].departmentinfo}`
