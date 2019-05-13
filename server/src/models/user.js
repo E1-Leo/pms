@@ -37,13 +37,17 @@ class UserModal {
   /**
    * 查找用户列表
    * @return {Array}    返回用户信息
+   * @param {Number} offset 从第offset页开始查询
+   * @param {Number} pageSize 每次查询条数
    */
-  static async getUserList() {
-    let result = await dbUtils.selectAll('user');
+  static async getUserList(offset, pageSize) {
+    let totalResult = await dbUtils.selectAll('user');
+    let result = await dbUtils.findDataByPage('user', '*', offset, pageSize);
     if (Array.isArray(result) && result.length > 0) {
-      return result;
+      return { list: result, total: totalResult.length};
     } else {
-      return [];
+      result = [];
+      return {result, total: 0};
     }
   }
 

@@ -20,7 +20,8 @@
         :total='total' 
         :page-size='pageSize' 
         :current.sync='page' 
-        @on-change='currentChange'>
+        @on-change='currentChange'
+        show-total>
       </Page>
     </div>
   </div>
@@ -33,7 +34,7 @@ export default {
     return {
       total: 0,
       page: 1,
-      pageSize: 3,
+      pageSize: 5,
       columns: [
         {
           title: '编号',

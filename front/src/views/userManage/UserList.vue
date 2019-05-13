@@ -20,7 +20,8 @@
         :total='total' 
         :page-size='pageSize' 
         :current.sync='page' 
-        @on-change='currentChange'>
+        @on-change='currentChange'
+        show-total>
       </Page>
     </div>
   </div>
@@ -31,9 +32,9 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      total: 9999,
+      total: 0,
       page: 1,
-      pageSize: 10,
+      pageSize: 5,
       columns: [
         {
           title: '编号',
@@ -61,14 +62,16 @@ export default {
     };
   },
   created() {
-    this.getList();
+    this.getList(this.page);
   },
   methods: {
-    getList() {
-      axios.get('/api/user/List')
+    getList(page = 1) {
+      let offset = this.pageSize*(page-1);
+      axios.get('/api/user/List?offset='+offset+'&pageSize='+this.pageSize)
         .then(({data}) => {
           if(data.success) {
-            this.list = data.res;
+            this.list = data.res.list;
+            this.total = data.res.total;
           }
         })
     },
@@ -94,6 +97,7 @@ export default {
         })
     },
     currentChange (page) {
+      this.getList(page);
       this.$router.push({
           name: this.$route.name,
           query: {

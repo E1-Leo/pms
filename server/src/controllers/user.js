@@ -55,8 +55,9 @@ class UserController {
    */
   static async getUserList(ctx) {
     let result = handle.response(false, '获取列表失败', null, 201);
-
-    let userResult = await userModel.getUserList();
+    let offset = parseInt(ctx.request.query.offset);
+    let pageSize = parseInt(ctx.request.query.pageSize);
+    let userResult = await userModel.getUserList(offset, pageSize);
     if (userResult) {
         result = handle.response(true, '', userResult, 200);
     }

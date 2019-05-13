@@ -5,6 +5,8 @@ class DepartmentModal {
   /**
    * 查找部门列表
    * @return {Array}     返回部门信息
+   * @param {Number} offset 从第offset页开始查询
+   * @param {Number} pageSize 每次查询条数
    */
   static async getDepartmentList(offset, pageSize) {
     let totalResult = await dbUtils.selectAll('department');
