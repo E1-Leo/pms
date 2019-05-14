@@ -16,8 +16,8 @@
             type="primary"
             @click="handleSubmit('formCustom')"
             style="margin-right: 20px;"
-          >Submit</i-button>
-          <Button @click="handleReset('formCustom')" style="margin-left: 8px">Reset</Button>
+          >提交</i-button>
+          <Button @click="handleReset('formCustom')" style="margin-left: 8px">重置</Button>
         </FormItem>
       </i-form>
     </div>
