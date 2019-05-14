@@ -35,6 +35,15 @@ class StaffModal {
   }
 
   /**
+   * 更新员工
+   * @param {object} options  
+   */
+  static async updateStaff(options, id) {
+    let updateResult = await dbUtils.updateData('staff', options, id);
+    return updateResult;
+  }
+
+  /**
    * 删除员工
    * @param {*} id 
    */

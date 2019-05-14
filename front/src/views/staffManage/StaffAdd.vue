@@ -26,7 +26,7 @@
           <i-button type="primary" @click="handleSubmit('formCustom')"
             >提交</i-button
           >
-          <Button @click="handleReset('formCustom')" style="margin-left: 8px">Reset</Button>
+          <Button @click="handleReset('formCustom')" style="margin-left: 8px">重置</Button>
         </FormItem>
       </i-form>
     </div>
@@ -116,13 +116,13 @@ export default {
     this.getdepartment();
   },
   methods: {
-    getdepartment(page = 1) {
-      axios.get('/api/department/list?offset=0&pageSize=999')
-        .then(({data}) => {
-          if( data.success ) {
-            this.departmentList = data.res.list;
+    getdepartment() {
+      axios.get('/api/department/alllist')
+        .then(({ data }) => {
+          if (data.success) {
+            this.departmentList = data.res;
           }
-        })
+        });
     },
     handleSubmit(name) {
       this.$refs[name].validate(valid => {

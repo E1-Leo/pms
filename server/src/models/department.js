@@ -20,6 +20,20 @@ class DepartmentModal {
   }
 
   /**
+   * 查找全部部门列表
+   * @return {Array}     返回部门信息
+   */
+  static async getDepartmentAllList() {
+    let result = await dbUtils.selectAll('department');
+    if (Array.isArray(result) && result.length > 0) {
+      result = result
+    } else {
+      result = []
+    }
+    return result
+  }
+
+  /**
    * 根据部门、部门信息创建部门
    * @param  {object} options 部门、部门信息
    * @return {object|null}    部门信息或null
@@ -33,6 +47,15 @@ class DepartmentModal {
       }
     }
     return null;
+  }
+
+  /**
+   * 更新部门
+   * @param {object} options  
+   */
+  static async updateDepartment(options, id) {
+    let updateResult = await dbUtils.updateData('department', options, id);
+    return updateResult;
   }
 
   /**

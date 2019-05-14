@@ -5,8 +5,9 @@
         <strong>{{ row.name }}</strong>
       </template>
       <template slot-scope="{ row, index }" slot="action">
-        <i-button type="primary" size="small" style="margin-right: 5px" @click="show(index)">View</i-button>
-        <Button type="error" size="small" @click="remove(row.id)">Delete</Button>
+        <Button type="primary" size="small" style="margin-right: 5px" @click="show(index)">查看</Button>
+        <Button type="primary" size="small" style="margin-right: 5px" @click="openModal(row)">修改</Button>
+        <Button type="error" size="small" @click="remove(row.id)">删除</Button>
       </template>
     </Table>
     <div class="page">
@@ -18,6 +19,22 @@
         show-total
       ></Page>
     </div>
+    <Modal
+      v-model="showModal"
+      title="修改"
+      :loading="loading"
+      @on-ok="confirmModify"
+      @on-cancel="cancelModify"
+    >
+      <p>姓名：</p>
+      <Input type="text" v-model="modalData.name" />
+      <p>部门：</p>
+      <Input type="text" v-model="modalData.department"/>
+      <p>职位：</p>
+      <Input type="text" v-model="modalData.jobname"/>
+      <p>入职时间：</p>
+      <Input type="text" v-model="modalData.jobtime"/>
+    </Modal>
   </div>
 </template>
 
@@ -30,6 +47,9 @@ export default {
       total: 0,
       page: 1,
       pageSize: 5,
+      showModal: false,
+      loading: true,
+      modalData: {},
       columns: [
         {
           title: '编号',
@@ -71,7 +91,6 @@ export default {
         {
           title: '操作',
           slot: 'action',
-          width: 150,
           align: 'center'
         }
       ],
@@ -84,12 +103,11 @@ export default {
     this.getdepartment();
   },
   methods: {
-    getdepartment(page = 1) {
-      axios
-        .get('/api/department/list?offset=0&pageSize=999')
+    getdepartment() {
+      axios.get('/api/department/alllist')
         .then(({ data }) => {
           if (data.success) {
-            this.departmentList = data.res.list;
+            this.departmentList = data.res;
           }
         });
     },
@@ -99,8 +117,7 @@ export default {
     },
     getList(page = 1) {
       let offset = this.pageSize * (page - 1);
-      axios
-        .get('/api/staff/list?offset=' + offset + '&pageSize=' + this.pageSize)
+      axios.get('/api/staff/list?offset=' + offset + '&pageSize=' + this.pageSize)
         .then(({ data }) => {
           if (data.success) {
             this.list = data.res.list;
@@ -117,6 +134,23 @@ export default {
                   职位：${this.list[index].jobname}<br>
                   入职时间：${this.getTime(this.list[index].jobtime)}`
       });
+    },
+    openModal (record) {
+      this.showModal = true;
+      this.modalData = {...record};
+    },
+    confirmModify () {
+      axios.post('/api/staff/update', {...this.modalData})
+        .then(({data}) => {
+          if (data.success) {
+            this.$Message.success('更新成功');
+            this.showModal = false;
+            this.getList(this.page);
+          }
+        })
+    },
+    cancelModify () {
+      this.showModal = false;
     },
     remove(id) {
       axios.post('/api/staff/delete', { id: id }).then(({ data }) => {

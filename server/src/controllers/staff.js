@@ -38,6 +38,27 @@ class StaffController {
   }
 
   /**
+   * 更新员工
+   * @param {*} ctx 
+   */
+  static async updateStaff(ctx) {
+    let result = handle.response(false, '更新失败', null, 201);
+    let formData = ctx.request.body;
+    let staffResult = await staffModel.updateStaff({
+        name: formData.name,
+        department: formData.department,
+        jobname: formData.jobname,
+        jobtime: formData.jobtime
+      },
+      formData.id
+    );
+    if (staffResult) {
+      result = handle.response(true, '更新成功', null, 200);
+    }
+    ctx.body = result;
+  }
+
+  /**
    * 删除员工
    * @param {*} ctx
    */

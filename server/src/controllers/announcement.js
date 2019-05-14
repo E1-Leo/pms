@@ -36,6 +36,26 @@ class AnnouncementController {
   }
 
   /**
+   * 更新公告
+   * @param {*} ctx 
+   */
+  static async updateAnnouncement(ctx) {
+    let result = handle.response(false, '更新失败', null, 201);
+    let formData = ctx.request.body;
+    let userResult = await announcementModel.updateAnnouncement({
+        announcementtitle: formData.announcementtitle,
+        announcementinfo: formData.announcementinfo,
+        publishtime: formData.publishtime,
+        publishname: formData.publishname
+      }, formData.id
+    );
+    if (userResult) {
+      result = handle.response(true, '更新成功', null, 200);
+    }
+    ctx.body = result;
+  }
+
+  /**
    * 删除公告
    * @param {*} ctx
    */

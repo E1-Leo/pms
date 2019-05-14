@@ -5,14 +5,9 @@
         <strong>{{ row.publishname }}</strong>
       </template>
       <template slot-scope='{ row, index }' slot='action'>
-        <Button
-          type='primary'
-          size='small'
-          style='margin-right: 5px'
-          @click='show(index)'
-          >View</Button
-        >
-        <Button type='error' size='small' @click='remove(row.id)'>Delete</Button>
+        <Button type='primary' size='small' style='margin-right: 5px' @click='show(index)'>查看</Button>
+        <Button type="primary" size="small" style="margin-right: 5px" @click="openModal(row)">修改</Button>
+        <Button type='error' size='small' @click='remove(row.id)'>删除</Button>
       </template>
     </Table>
     <div class='page'>
@@ -24,6 +19,22 @@
         show-total>
       </Page>
     </div>
+    <Modal
+      v-model="showModal"
+      title="修改"
+      :loading="loading"
+      @on-ok="confirmModify"
+      @on-cancel="cancelModify"
+    >
+      <p>公告标题：</p>
+      <Input type="text" v-model="modalData.announcementtitle" />
+      <p>公告内容：</p>
+      <Input type="text" v-model="modalData.announcementinfo"/>
+      <p>发布时间：</p>
+      <Input type="text" v-model="modalData.publishtime"/>
+      <p>发布人：</p>
+      <Input type="text" v-model="modalData.publishname"/>
+    </Modal>
   </div>
 </template>
 
@@ -36,6 +47,9 @@ export default {
       total: 0,
       page: 1,
       pageSize: 5,
+      showModal: false,
+      loading: true,
+      modalData: {},
       columns: [
         {
           title: '编号',
@@ -68,7 +82,6 @@ export default {
         {
           title: '操作',
           slot: 'action',
-          width: 150,
           align: 'center'
         }
       ],
@@ -102,6 +115,23 @@ export default {
                   发布时间：${this.getTime(this.list[index].publishtime)}<br>
                   发布人：${this.list[index].publishname}`
       });
+    },
+    openModal (record) {
+      this.showModal = true;
+      this.modalData = {...record};
+    },
+    confirmModify () {
+      axios.post('/api/announcement/update', {...this.modalData})
+        .then(({data}) => {
+          if (data.success) {
+            this.$Message.success('更新成功');
+            this.showModal = false;
+            this.getList(this.page);
+          }
+        })
+    },
+    cancelModify () {
+      this.showModal = false;
     },
     remove(id) {
       axios.post('/api/announcement/delete', {id: id})

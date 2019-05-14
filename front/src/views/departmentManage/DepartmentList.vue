@@ -5,14 +5,9 @@
         <strong>{{ row.department }}</strong>
       </template>
       <template slot-scope='{ row, index }' slot='action'>
-        <Button
-          type='primary'
-          size='small'
-          style='margin-right: 5px'
-          @click='show(index)'
-          >View</Button
-        >
-        <Button type='error' size='small' @click='remove(row.id)'>Delete</Button>
+        <Button type='primary' size='small' style='margin-right: 15px' @click='show(index)'>查看</Button>
+        <Button type="primary" size="small" style="margin-right: 15px" @click="openModal(row)">修改</Button>
+        <Button type='error' size='small' @click='remove(row.id)'>删除</Button>
       </template>
     </Table>
     <div class='page'>
@@ -24,6 +19,18 @@
         show-total>
       </Page>
     </div>
+    <Modal
+      v-model="showModal"
+      title="修改"
+      :loading="loading"
+      @on-ok="confirmModify"
+      @on-cancel="cancelModify"
+    >
+      <p>部门：</p>
+      <Input type="text" v-model="modalData.department"/>
+      <p>部门信息：</p>
+      <Input type="text" v-model="modalData.departmentinfo"/>
+    </Modal>
   </div>
 </template>
 
@@ -35,6 +42,9 @@ export default {
       total: 0,
       page: 1,
       pageSize: 5,
+      showModal: false,
+      loading: true,
+      modalData: {},
       columns: [
         {
           title: '编号',
@@ -54,7 +64,6 @@ export default {
         {
           title: '操作',
           slot: 'action',
-          width: 150,
           align: 'center'
         }
       ],
@@ -82,6 +91,23 @@ export default {
                   部门：${this.list[index].department}<br>
                   部门信息：${this.list[index].departmentinfo}`
       });
+    },
+    openModal (record) {
+      this.showModal = true;
+      this.modalData = {...record};
+    },
+    confirmModify () {
+      axios.post('/api/department/update', {...this.modalData})
+        .then(({data}) => {
+          if (data.success) {
+            this.$Message.success('更新成功');
+            this.showModal = false;
+            this.getList(this.page);
+          }
+        })
+    },
+    cancelModify () {
+      this.showModal = false;
     },
     remove(id) {
       axios.post('/api/department/delete', {id: id})

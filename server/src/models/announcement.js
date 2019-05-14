@@ -37,10 +37,19 @@ class AnnouncementModal {
   }
 
   /**
+   * 更新公告
+   * @param {object} options  
+   */
+  static async updateAnnouncement(options, id) {
+    let updateResult = await dbUtils.updateData('announcement', options, id);
+    return updateResult;
+  }
+
+  /**
    * 删除公告
    * @param {*} id
    */
-  static async deleteStaff (id) {
+  static async deleteAnnouncement(id) {
     return await dbUtils.deleteDataById('announcement', id);
   }
 }
