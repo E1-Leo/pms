@@ -31,7 +31,12 @@
       <p>公告内容：</p>
       <Input type="text" v-model="modalData.announcementinfo"/>
       <p>发布时间：</p>
-      <Input type="text" v-model="modalData.publishtime"/>
+      <DatePicker
+        type="date"
+        v-model="modalData.publishtime"
+        placeholder="选择日期"
+        style="width: 100%"
+      ></DatePicker>
       <p>发布人：</p>
       <Input type="text" v-model="modalData.publishname"/>
     </Modal>
@@ -118,10 +123,10 @@ export default {
     },
     openModal (record) {
       this.showModal = true;
-      this.modalData = {...record};
+      this.modalData = {...record, publishtime: new Date(record.publishtime)};
     },
     confirmModify () {
-      axios.post('/api/announcement/update', {...this.modalData})
+      axios.post('/api/announcement/update', {...this.modalData, publishtime: this.modalData.publishtime ? this.modalData.publishtime.getTime() : 0})
         .then(({data}) => {
           if (data.success) {
             this.$Message.success('更新成功');

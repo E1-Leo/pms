@@ -29,11 +29,18 @@
       <p>姓名：</p>
       <Input type="text" v-model="modalData.name" />
       <p>部门：</p>
-      <Input type="text" v-model="modalData.department"/>
+      <Select style="width:100%"  v-model="modalData.department">
+        <Option v-for="item in departmentList" :key="item.id" :value="item.id">{{ item.department }}</Option>
+      </Select>
       <p>职位：</p>
       <Input type="text" v-model="modalData.jobname"/>
       <p>入职时间：</p>
-      <Input type="text" v-model="modalData.jobtime"/>
+      <DatePicker
+        type="date"
+        v-model="modalData.jobtime"
+        placeholder="选择日期"
+        style="width: 100%"
+      ></DatePicker>
     </Modal>
   </div>
 </template>
@@ -137,10 +144,10 @@ export default {
     },
     openModal (record) {
       this.showModal = true;
-      this.modalData = {...record};
+      this.modalData = {...record, jobtime: new Date(record.jobtime)};
     },
     confirmModify () {
-      axios.post('/api/staff/update', {...this.modalData})
+      axios.post('/api/staff/update', {...this.modalData, jobtime: this.modalData.jobtime ? this.modalData.jobtime.getTime() : 0})
         .then(({data}) => {
           if (data.success) {
             this.$Message.success('更新成功');
