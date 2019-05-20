@@ -31,11 +31,6 @@
       </i-input>
     </Form-item>
     <Form-item class="login-no-bottom">
-      <Checkbox-group v-model="formLogin.remember">
-        <Checkbox label="记住密码" name="remember"></Checkbox>
-      </Checkbox-group>
-    </Form-item>
-    <Form-item class="login-no-bottom">
       <Row>
         <i-col :xs="{ span: 4, offset: 6 }">
           <i-button type="primary" @click="handleSubmit('formLogin')"
@@ -60,8 +55,7 @@ export default {
     return {
       formLogin: {
         username: '',
-        password: '',
-        remember: []
+        password: ''
       },
       formLoginRules: {
         username: [
@@ -90,25 +84,16 @@ export default {
           axios.post('/api/user/signIn', { username: this.formLogin.username, password: this.formLogin.password })
             .then((res) => {
               if( res.data.success ) {
-                this.$Message.success('提交成功!');
+                this.$Message.success('登录成功!');
                 this.$router.push({ path: '/userlist' });
+              } else {
+                this.$Message.error(res.data.message);
               }
+            }).catch((res) => {
+              this.$Message.error(res.data.message);
             });
         } else {
           this.$Message.error('表单验证失败!');
-        }
-        if (this.formLogin.remember[0] == '记住密码') {
-          sessionStorage.setItem(
-            'username',
-            JSON.stringify(this.formLogin.username)
-          );
-          sessionStorage.setItem(
-            'password',
-            JSON.stringify(this.formLogin.password)
-          );
-        } else {
-          sessionStorage.removeItem('username');
-          sessionStorage.removeItem('password');
         }
       });
     },

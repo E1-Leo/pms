@@ -69,7 +69,7 @@ export default {
   methods: {
     getList(page = 1) {
       let offset = this.pageSize*(page-1);
-      axios.get('/api/user/List?offset='+offset+'&pageSize='+this.pageSize)
+      axios.get('/api/user/list?offset='+offset+'&pageSize='+this.pageSize)
         .then(({data}) => {
           if(data.success) {
             this.list = data.res.list;

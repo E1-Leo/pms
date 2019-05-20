@@ -3,15 +3,16 @@
  */
 
 const router = require('koa-router')()
+const checkAuth = require('../middleswares/checkAuth');
 const userController = require('../controllers/user');
 
 const routers = router
   .post('/user/signIn', userController.signIn)
-  .get('/user/signOut', userController.signOut)
+  .post('/user/signOut', userController.signOut)
   
-  .get('/user/List', userController.getUserList)
-  .post('/user/update', userController.updateUser)
-  .post('/user/create', userController.createUser)
-  .post('/user/delete', userController.deleteUser)
+  .get('/user/list', checkAuth, userController.getUserList)
+  .post('/user/update', checkAuth, userController.updateUser)
+  .post('/user/create', checkAuth, userController.createUser)
+  .post('/user/delete', checkAuth, userController.deleteUser)
   
 module.exports = routers

@@ -7,10 +7,10 @@ const checkAuth = require('../middleswares/checkAuth');
 const departmentController = require('../controllers/department');
 
 const routers = router
-    .get('/department/list', departmentController.getDepartmentList )
-    .get('/department/alllist', departmentController.getDepartmentAllList )
-    .post('/department/create', departmentController.createDepartment )
-    .post('/department/update', departmentController.updateDepartment )
-    .post('/department/delete', departmentController.deleteDepartment )
+    .get('/department/list', checkAuth, departmentController.getDepartmentList )
+    .get('/department/alllist', checkAuth, departmentController.getDepartmentAllList )
+    .post('/department/create', checkAuth, departmentController.createDepartment )
+    .post('/department/update', checkAuth, departmentController.updateDepartment )
+    .post('/department/delete', checkAuth, departmentController.deleteDepartment )
 
 module.exports = routers
