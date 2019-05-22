@@ -115,6 +115,8 @@ export default {
         .then(({ data }) => {
           if (data.success) {
             this.departmentList = data.res;
+          } else {
+            this.$Message.error(data.message);
           }
         });
     },

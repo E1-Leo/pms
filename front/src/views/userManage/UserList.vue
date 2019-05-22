@@ -74,6 +74,8 @@ export default {
           if(data.success) {
             this.list = data.res.list;
             this.total = data.res.total;
+          } else {
+            this.$Message.error(data.message);
           }
         })
     },
